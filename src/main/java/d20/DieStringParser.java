@@ -6,6 +6,7 @@ public class DieStringParser {
 	private int negativeModifier;
 	private int positiveModifier;
 	private String afterD;
+	private NumberGenerator numberGenerator = new NumberGenerator();
 	
 	public void rawString(String dieString) {
 		this.numOfDie = dieString.split("[d]")[0].length() == 0  ? 1 : 
@@ -21,7 +22,7 @@ public class DieStringParser {
 			numOfFaces = dieString.split("d")[1].length() == 0  ? 1 : 
 				Integer.parseInt(dieString.split("d")[1]);
 		}
-		
+		numberGenerator.generateRandom(numOfFaces, numOfDie, negativeModifier, positiveModifier);
 	}
 
 	private void setNegativeModifier(String dieString) {

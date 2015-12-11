@@ -2,6 +2,7 @@ package d20;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.Before;
@@ -20,6 +21,8 @@ public class DieTest {
 	@Mock
 	private NumberGenerator numberGenerator;
 	
+	String dieString = "d6";
+	
 	@Before
 	public void setup(){
 		MockitoAnnotations.initMocks(this);
@@ -28,19 +31,21 @@ public class DieTest {
 	@Test
 	public void shouldRoll6FacedDieToReturnANumber() {
 		when(dieStringParser.getNumOfFaces()).thenReturn(6);
-		when(numberGenerator.generateRandom(6)).thenReturn(4);
-		assertThat(underTest.roll("d6"), is(4));
-			
+		when(numberGenerator.total()).thenReturn(4);
+		
+		assertThat(underTest.roll(dieString), is(4));
+		verify(dieStringParser).rawString(dieString);
+		
 	}
 	
 	@Test
 	public void shouldRoll6FacedDieToReturnARandomNumber() {
 		when(dieStringParser.getNumOfFaces()).thenReturn(6);
 		
-		when(numberGenerator.generateRandom(6)).thenReturn(5);
-		assertThat(underTest.roll("d6"), is(5));
-			
+		when(numberGenerator.total()).thenReturn(5);
+		assertThat(underTest.roll(dieString), is(5));	
 	}
+	
 	
 	
 

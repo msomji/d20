@@ -7,10 +7,10 @@ public class Die {
 	private int numOfFaces;
 
 	public int roll(String dieString) {
-		
+		dieStringParser.rawString(dieString);
 		this.numOfFaces = dieStringParser.getNumOfFaces();
 		
-		return numberGenerator.generateRandom(numOfFaces);
+		return numberGenerator.total();
 	}
 
 }
