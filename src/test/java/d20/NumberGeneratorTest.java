@@ -30,14 +30,13 @@ public class NumberGeneratorTest {
 	@Before
 	public void setup(){
 		MockitoAnnotations.initMocks(this);
-		underTest = new NumberGenerator();
 	}
-	
+	@Ignore
 	@Test
 	public void shouldReturnANumberBetween1And10() {
 		
-		assertThat(underTest.random(10), lessThan(11));
-		assertThat(underTest.random(10), greaterThan(0));
+		assertThat(underTest.returnRandom(10), lessThan(11));
+		assertThat(underTest.returnRandom(10), greaterThan(0));
 		
 	}
 	
@@ -46,11 +45,31 @@ public class NumberGeneratorTest {
 //		
 //	}
 	@Test
-	public void shouldRollTwiceIfThereAreTwoDie(){
-		underTest.generateRandom(6, 2, 0, 0);
-//TODO: How to put a verify so that I can see rand.nextInt(was called twice)
+	public void shouldRollOnceIfThereisOneDie(){
 		when(random.nextInt(6)).thenReturn(4);
+		underTest.generateRandom(6, 1, 0, 0);
+		verify(random, times(1)).nextInt(6);
+		
+		assertThat(underTest.total(), is(5));
+		
+	}
+	
+	@Test
+	public void shouldRollTwiceIfThereAreTwoDie(){
+		when(random.nextInt(6)).thenReturn(4);
+		underTest.generateRandom(6, 2, 0, 0);
+		verify(random, times(2)).nextInt(6);
+		
 		assertThat(underTest.total(), is(10));
+	}
+	
+	@Test
+	public void shouldsetMinRollValueTo0(){
+		when(random.nextInt(6)).thenReturn(4);
+		underTest.generateRandom(6, 20, 50, 0);
+		verify(random, times(20)).nextInt(6);
+		
+		assertThat(underTest.total(), is(0));
 	}
 
 }
