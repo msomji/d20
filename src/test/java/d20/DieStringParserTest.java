@@ -11,13 +11,13 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 public class DieStringParserTest {
+	@InjectMocks
 	DieStringParser underTest;
 	
 	
 	@Before
 	public void setup(){
 		MockitoAnnotations.initMocks(this);
-		underTest = new DieStringParser();
 	}
 
 	@Test
