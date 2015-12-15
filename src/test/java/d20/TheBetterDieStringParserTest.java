@@ -33,43 +33,53 @@ public class TheBetterDieStringParserTest {
 		assertThat(underTest.getNumOfFaces(), is(5));		
 	}
 	
-//	
-//	@Test
-//	public void shouldReturnThatThereAreTwoDie(){
-//		underTest.rawString("2d5");
-//		assertThat(underTest.getNumOfDie(), is(2));
-//	}
-//	
-//	@Test
-//	public void shouldReturnThatThereAreTenDie(){
-//		underTest.rawString("10d5");
-//		assertThat(underTest.getNumOfDie(), is(10));
-//	}
-//	
-//	@Test
-//	public void shouldReturn0ModifierifNoneArePassed(){
-//		underTest.rawString("2d5");
-//		assertThat(underTest.getNegativeModifier(), is(0));
-//		assertThat(underTest.getPositiveModifier(), is(0));
-//	}
-//
-//	@Test
-//	public void shouldReturn3When3IsPassed(){
-//		underTest.rawString("2d5+3");
-//		assertThat(underTest.getPositiveModifier(), is(3));
-//	}
-//	
-//	@Test
-//	public void shouldReturn30WhenPositive30ModifierIsPassed(){
-//		underTest.rawString("2d5+30");
-//		assertThat(underTest.getPositiveModifier(), is(30));
-//	}
-//	
-//	@Test
-//	public void shouldReturnNegativeModifier3WhenNegative3ModifierIsPassed(){
-//		underTest.rawString("2d5-3");
-//		assertThat(underTest.getNegativeModifier(), is(3));
-//		assertThat(underTest.getPositiveModifier(), is(0));
-//	}
+	
+	@Test
+	public void shouldReturnThatThereAreTwoDie(){
+		String dieString = "2d5";
+		underTest.setFields(dieString);
+		assertThat(underTest.getNumOfDie(), is(2));
+	}
+	
+	@Test
+	public void shouldReturnThatThereAreTenDie(){
+		String dieString = "10d5";
+		underTest.setFields(dieString);
+		assertThat(underTest.getNumOfDie(), is(10));
+	}
+	@Test
+	public void shouldSetDefaultNumberOfDieTo1(){
+		String dieString = "d5";
+		underTest.setFields(dieString);
+		assertThat(underTest.getNumOfDie(), is(1));
+	}
+	
+	@Test
+	public void shouldReturn0ModifierifNoneArePassed(){
+		String dieString = "10d5";
+		underTest.setFields(dieString);
+		assertThat(underTest.getModifier(), is(0));
+	}
+
+	@Test
+	public void shouldReturn3When3IsPassedAsAModifier(){
+		String dieString = "10d5+3";
+		underTest.setFields(dieString);
+		assertThat(underTest.getModifier(), is(3));
+	}
+	
+	@Test
+	public void shouldReturn30WhenPositive30ModifierIsPassed(){
+		String dieString = "10d5+30";
+		underTest.setFields(dieString);
+		assertThat(underTest.getModifier(), is(+30));
+	}
+	
+	@Test
+	public void shouldReturnNegativeModifier3WhenNegative3ModifierIsPassed(){
+		String dieString = "10d5-30";
+		underTest.setFields(dieString);
+		assertThat(underTest.getModifier(), is(-30));
+	}
 
 }
