@@ -25,25 +25,24 @@ public class NumberGeneratorTest {
 	
 	@Mock
 	Random random;
-	
 
 	@Before
 	public void setup(){
 		MockitoAnnotations.initMocks(this);
 	}
-	@Ignore
+
 	@Test
 	public void shouldReturnANumberBetween1And10() {
 		
 		assertThat(underTest.returnRandom(10), lessThan(11));
 		assertThat(underTest.returnRandom(10), greaterThan(0));
-		
 	}
 	
 //	@Test
 //	public void shouldThrowIlleagalArgumentExceptionIfNumberIsNegative(){
 //		
 //	}
+	
 	@Test
 	public void shouldRollOnceIfThereisOneDie(){
 		when(random.nextInt(6)).thenReturn(4);
@@ -51,25 +50,38 @@ public class NumberGeneratorTest {
 		verify(random, times(1)).nextInt(6);
 		
 		assertThat(underTest.total(), is(5));
-		
 	}
 	
 	@Test
 	public void shouldRollTwiceIfThereAreTwoDie(){
 		when(random.nextInt(6)).thenReturn(4);
 		underTest.generateRandom(6, 2, 0, 0);
-		verify(random, times(2)).nextInt(6);
 		
 		assertThat(underTest.total(), is(10));
+		verify(random, times(2)).nextInt(6);
 	}
 	
 	@Test
 	public void shouldsetMinRollValueTo0(){
 		when(random.nextInt(6)).thenReturn(4);
-		underTest.generateRandom(6, 20, 50, 0);
-		verify(random, times(20)).nextInt(6);
 		
-		assertThat(underTest.total(), is(0));
-	}
+		assertThat(underTest.generateRandom(6, 20, 50000, 0), is(0));
+		verify(random, times(20)).nextInt(6);
 
+	}
+	
+	@Test
+	public void shouldsetMinRollValueTo1(){
+		when(random.nextInt(6)).thenReturn(4);
+		
+		assertThat(underTest.generateRandom(6, 20, 500000, 0, 1), is(1));
+		verify(random, times(20)).nextInt(6);
+	}
+	
+	@Test
+	public void shouldAddAppropriatePositiveModifierToRoll(){
+		when(random.nextInt(6)).thenReturn(4);
+		
+		assertThat(underTest.generateRandom(6, 2, 0, 3 ), is(13));
+	}
 }

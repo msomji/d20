@@ -8,6 +8,7 @@ public class NumberGenerator {
 	private int numOfFaces;
 	private int negativeModifier;
 	private int positiveModifier;
+	private int minValue = 0;
 	private Random random = new Random();
 	private int sum;
 	
@@ -17,20 +18,31 @@ public class NumberGenerator {
 		this.numOfDie = numOfDie;
 		this.negativeModifier = negativeModifier;
 		this.positiveModifier = positiveModifier;
+		
 		return total();
 	}
-
+	
+	public int generateRandom(int numOfFaces, int numOfDie, int negativeModifier, int positiveModifier, int minValue) {
+		this.minValue = minValue;
+		this.numOfFaces = numOfFaces;
+		this.numOfDie = numOfDie;
+		this.negativeModifier = negativeModifier;
+		this.positiveModifier = positiveModifier;
+		return total();
+	}
+	
 	public int total() {
 		while(numOfDie > 0){
 			sumItterationalTotal();
 		}
-		return Math.max(0, sum);
+		sum += positiveModifier;
+		sum -= negativeModifier;
+		
+		return Math.max(minValue, sum);
 	}
 
 	private void sumItterationalTotal() {
 		sum += returnRandom(numOfFaces);
-		sum -= negativeModifier;
-		sum += positiveModifier;
 		numOfDie--;
 	}
 	

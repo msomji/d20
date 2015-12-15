@@ -9,6 +9,7 @@ public class DieStringParser {
 	private NumberGenerator numberGenerator = new NumberGenerator();
 	
 	public void rawString(String dieString) {
+		
 		this.numOfDie = dieString.split("[d]")[0].length() == 0  ? 1 : 
 			Integer.parseInt(dieString.split("[d]")[0]);
 		
